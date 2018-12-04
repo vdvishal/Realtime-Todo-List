@@ -1,0 +1,20 @@
+.custom {
+    background-image: linear-gradient(to bottom, #401254, #4b116a, #541082, #5b109b, #6012b5);
+    height: 87.5vh;
+    width: 100vw
+}
+.navbar{
+    background-color: #401254!important;  
+}
+
+.navbar-brand{
+    left: 50%;
+    color: aliceblue!important;
+    font-weight: 600;
+    font-size: 2.5em;
+}
+
+.card-img-top {
+    width: 200px;
+    height: 200px;
+}

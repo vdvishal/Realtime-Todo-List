@@ -1,0 +1,249 @@
+<div *ngIf='userInfo'>
+  <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light navbar-main">
+    <a class="navbar-brand">To Do App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon" style="font-size:2rem;color:white;"></span>
+    </button>
+
+    <div class="collapse navbar-collapse " id="navbarTogglerDemo02">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a style="font-size:2rem;color:white;margin: 7.5px;cursor: pointer;" (click)="getAllLists(userInfo.userId)">Welcome {{userInfo.firstName}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="fa fa-users" style="font-size:2rem;color:white;margin: 7.5px;cursor: pointer;" (click)="sidenav.toggle()"></a>
+        </li>
+        <!-- <li class="nav-item">
+          <button class="btn btn-outline-light btn-lg" type="button" style="margin-right: 7.5px;cursor: pointer;" (click)="undo(userInfo.userId)">Undo</button>
+        </li> -->
+        <li class="nav-item">
+          <button class="btn btn-outline-light btn-lg" type="button" (click)="logout()">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="push" position="end" [fixedInViewport]='fixed' [fixedTopGap]="0" [fixedTopGap]='0'>
+      <div class="divCss" routerLink="/search">
+        <i class="fa fa-search" style="font-size:1.5rem;color:white;margin: 7.5px;cursor: pointer;"></i>
+        Search User
+      </div>
+      <hr>
+      <div >
+        <h5 style="margin-left:0.5vw ">
+          Friend Requests
+          <span style="float: right;cursor: pointer;" (click)="showReq=!showReq">
+            <i class="fa fa-minus"></i>
+          </span>
+        </h5>
+        <hr>
+        <div>
+          <div style="text-align: center" *ngIf="reqInfo">
+            <p style="font-weight: 600;font-size: 1.25em">{{reqInfo.firstName}}</p>
+            <a class="fa fa-check-circle" style="font-size:2rem;color:rgb(55, 221, 13);margin:10px;cursor: pointer;" (click)="accept(reqInfo)"></a>
+            <a class="fa fa-times-circle" style="font-size:2rem;color:rgb(230, 9, 9);margin:10px;cursor: pointer;" (click)="reject(reqInfo)"></a>
+          </div>
+          <hr>
+        </div>
+        <div class="w3-animate-opacity" *ngIf="showReq;">
+          <div *ngIf="reqUserInfo">
+            <div *ngFor="let info of reqUserInfo">
+              <div style="text-align: center">
+                <p style="font-weight: 600;font-size: 1.25em">{{info.firstName}}</p>
+                <a class="fa fa-check-circle" style="font-size:2rem;color:rgb(55, 221, 13);margin:10px;cursor: pointer;" (click)="accept(info)"></a>
+                <a class="fa fa-times-circle" style="font-size:2rem;color:rgb(230, 9, 9);margin:10px;cursor: pointer;" (click)="reject(info)"></a>
+              </div>
+              <hr>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div style="font-size:1rem;font-weight: 500;margin: 7.5px">
+        <h5>
+          Friends:
+        </h5>
+        <hr>
+        <div class="listcss">
+          <div *ngFor="let name of userList">
+            <a style="cursor: default;">{{name.name}}</a>
+            <span (click)="getAllLists(name.id);sidenav.toggle();hide=false" style="float:right;cursor: pointer;">View ToDo list</span>
+            <hr>
+          </div>
+        </div>
+
+      </div>
+
+    </mat-sidenav>
+
+    <div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 colcss">
+            <nav class="navbar navbar-light bg-light navbar-next " style="padding: 15px">
+              <h6>ToDo Lists of
+                <span *ngIf="nameUser">{{ nameUser }}</span>
+              </h6>
+              <hr>
+              <div style="margin-left:4px" *ngIf="usId">
+                  <button class="btn btn-sm btn-outline-light" type="button" style="margin-left:auto;cursor: pointer;" (click)="showForm()" *ngIf="showList">Add List</button>
+                  <button class="btn btn-outline-light btn-sm" type="button" style="margin-left: 3px;cursor: pointer;" (click)="undo()">Undo</button>
+              </div>
+            </nav>
+            <div>
+              <div style="background-color: #000000a8;" *ngIf="!showList">
+                <div class="d-flex justify-content-center ">
+                  <form class="form text-center">
+                    <div class="form-label-group d-flex justify-content-center" style="">
+                      <input type="text" id="inputtext" class="form-control" placeholder="Enter name" [(ngModel)]="name" name="name" style="border-radius: 0.25em">
+                    </div>
+                    <button class="btn btn-outline-light" style="border-radius: 0.25em;margin: 10px" type="submit" (click)="createList()">Create</button>
+                    <button class="btn btn-outline-light" style="border-radius: 0.25em;margin: 10px" type="submit" (click)="showList=!showList">Cancel</button>
+                  </form>
+                </div>
+              </div>
+
+              <div class="listcss">
+                <mat-nav-list *ngIf="lists">
+                  <a mat-list-item *ngFor="let list of lists" (click)='viewList(list.id)'>{{ list.name }}
+                    <span>
+                      <mat-divider [inset]="true"></mat-divider>
+                    </span>
+                  </a>
+                </mat-nav-list>
+              </div>
+
+            </div>
+
+          </div>
+          <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 colcss" *ngIf="listData && hide">
+              <nav class="navbar navbar-light bg-light navbar-next" style="padding: 15px">
+                <h5>{{listData.name}}</h5>
+                <button class="btn btn-outline-light btn-sm" type="button" style="margin-left: auto;cursor: pointer;" (click)="deleteList(listData)"><i class="fa fa-trash"></i></button>
+
+              </nav>
+              <div class="fade-in" *ngIf="listData ">
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{listData.name}}
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <form class="form text-center" *ngIf="!edit">
+                  <input type="text" class="css-input" placeholder=" Task..." [(ngModel)]="taskName" name="taskName">
+                  <button class="btn btn-outline-light btn-sm" type="button" (click)="createEvent(listData)" style="margin: 4px;border-radius: 4px;padding: 4px">Add Task</button>
+                </form>
+                <div class="mat-body">
+                  <mat-accordion>
+                    <mat-expansion-panel *ngFor="let event of listData.events;let i = index;">
+                      <mat-expansion-panel-header (click)="getSubEvent(event.id)">
+                        <mat-panel-title >
+
+                        <span style="color:rgb(5, 212, 5);font-size: 20px;margin: 0 1.25em" *ngIf="event.isDone" (click)="eventCheck(event)">
+                          <i class="far fa-check-circle"></i>
+                        </span>
+                        <span style="font-size: 15px;margin-left: 1.25em" *ngIf="!event.isDone" >
+                          <span (click)="eventCheck(event)">
+                            <i class="far fa-circle"></i>
+                          </span>
+                          <span style="font-size: 15px;margin-left:1.25em" (click)="editEvent(i)" *ngIf="!edit">
+                              <i class="far fa-edit"></i>
+                          </span>
+                        </span>
+
+                            <span  *ngIf="!edit" style="font-size: 15px;margin-left:1.25em" (click)="deleteEvent(event)">
+                                <i class="fa fa-trash"></i>
+                              </span>
+    
+                        <span *ngIf="!edit" style="font-size: 15px;margin-left:1.25em">
+                          {{event.name}}
+                        </span>
+                      </mat-panel-title>
+
+
+                        <mat-panel-title *ngIf="showedit===i" id="event.id">
+                          <form class="form-inline">
+                            <input type="text" class="css-input2" placeholder=" Task..." [(ngModel)]="editName" name="editName">
+                            <button class="btn btn-outline-light btn-sm" type="button" (click)='editEventName(event)'>Edit Task</button>
+                            <button class="btn btn-outline-light btn-sm" type="button" (click)="editEvent()">Cancel</button>
+                          </form>
+                        </mat-panel-title>
+
+                      </mat-expansion-panel-header>
+                      <div style="margin-left: 1.25rem" *ngIf="!edit">
+                        <form class="form text-center" *ngIf="!subedit">
+                          <input type="text" class="css-input" placeholder=" Task..." [(ngModel)]="subTaskName" name="subTaskName">
+                          <button class="btn btn-outline-light btn-sm" type="button" (click)="createSubEvent(event)" style="margin: 4px;border-radius: 4px;padding: 4px">Add Task</button>
+                        </form>
+
+                      </div>
+                      <div *ngIf="!edit">
+                        <div *ngFor="let event of subEvents;" style="margin-left:4em;margin-top:12.5px;margin-bottom:12.5 ">
+                          <div style="margin-top:12.5px">
+                            <span style="color:rgb(5, 212, 5);font-size: 20px;cursor: pointer;" *ngIf="event.isDone" (click)="checkSubEvent(event)">
+                              <i class="far fa-check-circle"></i>
+                            </span>
+
+                            <span *ngIf="!event.isDone" >
+                              <i *ngIf="!subedit" (click)="checkSubEvent(event)" class="far fa-circle" style="font-size: 15px;cursor: pointer;"></i>
+                              <span style="font-size: 15px;cursor: pointer;margin-left: 1.25em" (click)="editSubEvent(event.id)" *ngIf="!subedit">
+                                  <i class="far fa-edit"></i>
+                                </span>
+                            </span>
+                            <span style="margin-left: 1.25em;font-size: 15px;cursor: pointer;" (click)="deleteSubEvent(event)" *ngIf="!subedit">
+                                <i class="fa fa-trash"></i>
+                              </span>
+                            <span *ngIf="!subedit" style="margin-left: 1.25em;font-size: 15px">
+                              {{event.name}}
+                            </span>
+
+                            <span>
+                              <form class="form-inline" *ngIf="showsubedit===event.id">
+                                <input type="text" class="css-input2" placeholder=" Task..." [(ngModel)]="editSubName" name="editSubName">
+                                <button class="btn btn-outline-light btn-sm" type="button" (click)='editSubEventName(event)'>Edit Task</button>
+                                <button class="btn btn-outline-light btn-sm" type="button" (click)="editSubEvent(Cancel)">Cancel</button>
+                              </form>
+                            </span>
+<!-- 
+
+                            <span style="margin-left: 2em;font-size: 20px;cursor: pointer;" (click)="deleteSubEvent(event)" *ngIf="!subedit">
+                              <i class="fa fa-trash"></i>
+                            </span> -->
+                          </div>
+                          <!-- <span *ngIf="!subedit" style="margin-top:12.5px">
+                                  <mat-divider [inset]="false"></mat-divider>
+                                </span> -->
+                        </div>
+                      </div>
+
+
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </div>
+              </mat-expansion-panel>
+
+              <div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 colcss">
+            <nav class="navbar navbar-light bg-light navbar-next" style="padding: 15px">
+              <h5>Notifications</h5>
+            </nav>
+            <div class="listcss2" style="overflow:auto;" #scrollMe >
+              <div *ngFor="let notice of notification" >
+                <p style="cursor: default;">{{notice}}</p>
+                <hr>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </mat-sidenav-container>
+</div>

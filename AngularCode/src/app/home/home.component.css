@@ -1,0 +1,116 @@
+.navbar-main{
+    background-color: #38044F!important;  
+}
+
+.navbar-next{
+    background-color: #000000a8!important;  
+}
+
+.navbar-brand{
+    left: 50%;
+    color: aliceblue!important;
+    font-weight: 600;
+    font-size: 2.5em;
+}
+
+mat-sidenav {
+    width: 35vw;
+    background-image: linear-gradient(to bottom, #37044e, #530772, #710b99, #910fc1, #b212eb);
+  }
+mat-sidenav-container {
+    height: 87vh;
+    background-image: linear-gradient(to bottom, #37044e, #530772, #710b99, #910fc1, #b212eb);
+
+  }
+
+.mat-body{
+    height: 54.5vh;
+    overflow-y:auto;
+}
+  .css-input {
+    padding: 5px;
+    font-size: 16px;
+    border-width: 1px;
+    border-color: #ffffff;
+    background-color: #4d4c4e;
+    color: #ffffff;
+    border-style: solid;
+    border-radius: 4px;
+    box-shadow: 1px 0px 1px rgba(148,17,199,.75);
+    text-shadow: 0px 0px 5px rgba(66,66,66,.75);
+}
+.css-input:focus {
+    outline:none;
+}
+
+.css-input2 {
+    margin-right: 2px;
+    font-size: 16px;
+    border-width: 1px;
+    border-color: #ffffff;
+    background-color: #4d4c4e;
+    color: #ffffff;
+    border-style: solid;
+    border-radius: 4px;
+    box-shadow: 1px 0px 1px rgba(148,17,199,.75);
+    text-shadow: 0px 0px 5px rgba(66,66,66,.75);
+}
+.css-input2:focus {
+    outline:none;
+}
+
+.colcss{
+    height: 84vh;
+    padding: 0;
+
+}
+
+.fade-in{
+    -webkit-animation: fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    animation: fade-in 1.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+@-webkit-keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+.listcss {
+    font-size: 15px;
+    padding: 10px;
+    height: 72.75vh;
+    overflow: auto;
+    background-color: #000000a8
+    
+}
+
+.listcss2 {
+    font-size: 15px;
+    padding: 10px;
+    background-color: #000000a8;
+    height: 72.75vh;
+}
+
+.divCss:focus {
+ outline: none;
+ cursor: pointer;
+}
+
+@media only screen 
+and (max-width : 625px) {
+    mat-sidenav {
+        width: 100vw
+    }
+}
